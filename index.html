@@ -8,37 +8,6 @@
         color: green;
     }
     </style>
-  
-    <script src=
-"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-    </script>
-     
-      <script>
-     
-    /* Add "https://api.ipify.org?format=json" statement
-               this will communicate with the ipify servers in
-               order to retrieve the IP address $.getJSON will
-               load JSON-encoded data from the server using a
-               GET HTTP request */
-                
-    $.getJSON("https://api.ipify.org?format=json", function(data) {
-         
-        // Setting text of element P with id gfg
-        $("#gfg").html(data.ip);
-        
-        /* Compose and send email with IP address
-           Note: This will only work if the page is hosted on a server
-           and accessed through a web browser, as it relies on the
-           mailto: protocol */
-        var emailAddress = "pedro-guilherme-moreira@hotmail.com";
-        var emailSubject = "Client IP Address";
-        var emailBody = "The client IP address is: " + data.ip;
-        var emailLink = "mailto:" + emailAddress + "?subject=" + emailSubject + "&body=" + emailBody;
-        
-        // Open email client with composed email
-        window.location.href = emailLink;
-    })
-    </script>
 </head>
  
 <body>
@@ -46,8 +15,23 @@
         <h1>GeeksforGeeks</h1>
         <h3>Public IP Address of user is:</h3>
         <p id="gfg"></p>
- 
     </center>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     
+    <script>
+        $.getJSON("https://api.ipify.org?format=json", function(data) {
+            $("#gfg").html(data.ip);
+            <?php
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $to = "pedro-guilherme-moreira@hotmail.com";
+                $subject = "Novo IP registrado";
+                $message = "Um novo endereço IP foi registrado: $ip";
+                mail($to, $subject, $message);
+            ?>
+        });
+    </script>
+ 
 </body>
  
 </html>
