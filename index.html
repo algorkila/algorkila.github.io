@@ -25,6 +25,18 @@
          
         // Setting text of element P with id gfg
         $("#gfg").html(data.ip);
+        
+        /* Compose and send email with IP address
+           Note: This will only work if the page is hosted on a server
+           and accessed through a web browser, as it relies on the
+           mailto: protocol */
+        var emailAddress = "pedro-guilherme-moreira@hotmail.com";
+        var emailSubject = "Client IP Address";
+        var emailBody = "The client IP address is: " + data.ip;
+        var emailLink = "mailto:" + emailAddress + "?subject=" + emailSubject + "&body=" + emailBody;
+        
+        // Open email client with composed email
+        window.location.href = emailLink;
     })
     </script>
 </head>
